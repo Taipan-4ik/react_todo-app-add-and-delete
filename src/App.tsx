@@ -112,14 +112,14 @@ export const App: React.FC = () => {
     );
   };
 
-  async function removeTodo(todoTodelete: Todo) {
-    setActiveTodoId(todoTodelete.id);
+  const removeTodo = async (todoToDelete: Todo) => {
+    setActiveTodoId(todoToDelete.id);
     try {
       setLoaderIsActive(true);
-      await deleteTodo(todoTodelete.id);
+      await deleteTodo(todoToDelete.id);
 
-      setTodos(prev => prev.filter(todo => todo.id !== todoTodelete.id));
-      setVisibleTodos(prev => prev.filter(todo => todo.id !== todoTodelete.id));
+      setTodos(prev => prev.filter(todo => todo.id !== todoToDelete.id));
+      setVisibleTodos(prev => prev.filter(todo => todo.id !== todoToDelete.id));
     } catch {
       setDeleteError(false);
       setTimeout(() => setDeleteError(true), 0);
@@ -128,7 +128,7 @@ export const App: React.FC = () => {
       setLoaderIsActive(false);
       setActiveTodoId(null);
     }
-  }
+  };
 
   const errors = checkError();
 
@@ -154,7 +154,7 @@ export const App: React.FC = () => {
           activeTodoId={activeTodoId}
           removeTodo={removeTodo}
         />
-        {todos.length && (
+        {todos.length !== 0 && (
           <TodoFooter
             todos={todos}
             setVisibleTodos={setVisibleTodos}

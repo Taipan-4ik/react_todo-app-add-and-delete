@@ -38,9 +38,6 @@ export const TodoFooter: React.FC<TodoFooterProps> = ({
             })}
             data-cy={`FilterLink${filterType}`}
             onClick={() => {
-              // const filteredList = filterTodos(todos, filterType);
-
-              // setVisibleTodos(filteredList);
               setSelectedFilterStatus(filterType);
             }}
           >

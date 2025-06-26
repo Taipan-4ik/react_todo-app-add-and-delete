@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 type NotificationProps = {
   isError: boolean;
@@ -18,7 +18,7 @@ export const ErrorNotification: React.FC<NotificationProps> = ({
 }) => {
   const hideTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-  function errorHide() {
+  const errorHide = useCallback(() => {
     setNotificationIsHide(false);
 
     if (hideTimerRef.current) {
@@ -28,7 +28,7 @@ export const ErrorNotification: React.FC<NotificationProps> = ({
     hideTimerRef.current = setTimeout(() => {
       setNotificationIsHide(true);
     }, 3000);
-  }
+  }, [setNotificationIsHide]);
 
   useEffect(() => {
     if (isError) {
@@ -40,7 +40,7 @@ export const ErrorNotification: React.FC<NotificationProps> = ({
         clearTimeout(hideTimerRef.current);
       }
     };
-  }, [errorId]);
+  }, [errorHide, errorId, isError]);
 
   return (
     <div
